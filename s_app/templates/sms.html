@@ -54,8 +54,8 @@
 						<p style="color:green">
 					    	{% for message in messages %}
 					    		{{ message }}
-					    	{% endfor %}<br><br>
-					    </p><br><br><br>
+					    	{% endfor %}
+					    </p><br>
 					    {% render_table grid_data %}
 					    <a href="{% url 'excel' %}">Download CSV</a>
 					</center>
