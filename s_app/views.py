@@ -15,7 +15,7 @@ def excelview(request):
     user_record = [['From', 'To', 'Message']]
     for sms in user_smses:
         user_record.append(
-            [sms.to.national_number, sms.user.username, sms.sms_text])
+            [sms.user.username, '+' + str(sms.to.country_code) + ' ' + str(sms.to.national_number), sms.sms_text])
     return ExcelResponse(user_record, 'my_data')
 
 
