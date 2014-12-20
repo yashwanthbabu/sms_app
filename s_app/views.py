@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 
-from .models import Sms
 from .forms import SmsForm
 from excel_response import ExcelResponse
 from django.contrib.auth import authenticate, login
@@ -10,7 +9,7 @@ from django.contrib import messages
 
 
 def excelview(request):
-    """excel sheet generation"""
+    """Excel sheet generation"""
     user_smses = request.user.sms_set.all()
     user_record = [['From', 'To', 'Message']]
     for sms in user_smses:
@@ -20,11 +19,10 @@ def excelview(request):
 
 
 def sms_view(request):
-    """sends the sms to the given mobile number"""
+    """Sends an sms to the given mobile number"""
     if request.method == "POST":
         form = SmsForm(request.POST)
         if form.is_valid():
-            to = form.cleaned_data.get('to')
             user = form.save(commit=False)
             user.user = request.user
             user.status = True
@@ -38,7 +36,7 @@ def sms_view(request):
 
 
 def signin(request):
-    """ signin's the user """
+    """ Signin's the user """
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
