@@ -19,7 +19,7 @@
     }
     #id_sms_text {
     	width: 330px;
-    	height: 30px;
+    	height: 110px;
     }
     </style>
     
@@ -58,9 +58,9 @@
 		<div class="panel-footer">
 			
 			<div class="pull-right">
-				{% if user %}
-                            <a href="{% url 'auth:logout' %}" class="btn btn-primary"> LOGOUT</a> &nbsp;
-                            {% endif %}
+				{% if user.is_authenticated %}
+                    <a href="{% url 'auth:logout' %}" class="btn btn-primary"> LOGOUT</a> &nbsp;
+                {% endif %}
 				<input type="submit" class="btn btn-primary" value="SEND SMS" />
 			</div>
 		</div>

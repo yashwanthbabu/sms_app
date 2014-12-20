@@ -6,9 +6,9 @@ from .models import Sms
 
 
 class SmsForm(ModelForm):
+    sms_text = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Sms
         exclude = ['user', 'status',]
-
 

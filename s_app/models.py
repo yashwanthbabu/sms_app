@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Sms(models.Model):
     user = models.ForeignKey(User)
     to = PhoneNumberField(default='+91')
-    sms_text = models.CharField(max_length = 700)
+    sms_text = models.CharField(max_length=700)
     status = models.BooleanField()
     sms_sent_time = models.DateTimeField(auto_now=True)
 
