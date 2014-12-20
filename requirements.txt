@@ -1,0 +1,4 @@
+Django==1.6
+django-phonenumber-field==0.6
+phonenumbers==7.0.1
+wsgiref==0.1.2
