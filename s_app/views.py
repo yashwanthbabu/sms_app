@@ -9,14 +9,15 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 
-
 def excelview(request):
     """excel sheet generation"""
-    data = [
-        ['Column 1', 'Column 2'],
-        ['fdf', 'tthj']
-    ]
-    return ExcelResponse(data, 'my_data')
+    user_smses = request.user.sms_set.all()
+    user_record = [['From', 'To', 'Message']]
+    for sms in user_smses:
+        user_record.append(
+            [sms.to.national_number, sms.user.username, sms.sms_text])
+    return ExcelResponse(user_record, 'my_data')
+
 
 def sms_view(request):
     """sends the sms to the given mobile number"""
@@ -28,7 +29,9 @@ def sms_view(request):
             user.user = request.user
             user.status = True
             user.save()
-            return HttpResponse("Success")
+            messages.add_message(
+                request, messages.INFO, 'Your message has been sent')
+            return redirect('sms')
     else:
         form = SmsForm()
     return render(request, 'sms.html', {'form': form})

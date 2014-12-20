@@ -35,7 +35,6 @@
 		</h3>
 	</center>
 	<div class="panel panel-primary">
-
 		<div class="panel-body">
 			<h4 class="text-center" style="margin-bottom: 25px;">Please enter particular for sms</h4>
 				<form action="/sms/" method="post" id="smsform">{% csrf_token %}
@@ -46,11 +45,14 @@
 										{{ form.as_p }}
 								</div>
 							</div>
-						</div><br><br></center>
-
-
-						
-					
+						</div><br><br>
+						<p style="color:green">
+					    	{% for message in messages %}
+					    		{{ message }}
+					    	{% endfor %}
+					    </p>
+					    <a href="{% url 'excel' %}">Download CSV</a>
+					</center>
 					
 		</div>
 		<div class="panel-footer">
