@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, render_to_response
 
 from .models import Sms
 from .forms import SmsForm
@@ -11,12 +11,13 @@ from django.contrib import messages
 
 def excelview(request):
     """excel sheet generation"""
+    import ipdb; ipdb.set_trace()
     user_smses = request.user.sms_set.all()
-    user_record = [['From', 'To', 'Message']]
+    user_record = [['From', 'To', 'Message', 'Status']]
     for sms in user_smses:
         user_record.append(
-            [sms.user.username, '+' + str(sms.to.country_code) + ' ' + str(sms.to.national_number), sms.sms_text])
-    return ExcelResponse(user_record, 'my_data')
+            [sms.user.username, '+' + str(sms.to.country_code) + ' ' + str(sms.to.national_number), sms.sms_text, sms.status])
+    return ExcelResponse(user_record, 'My_Sms_Sheet')
 
 
 def sms_view(request):
@@ -34,7 +35,7 @@ def sms_view(request):
             return redirect('sms')
     else:
         form = SmsForm()
-    return render(request, 'sms.html', {'form': form})
+    return render(request, 'sms.html', {'form': form, 'grid_data': request.user.sms_set.all()})
 
 
 def signin(request):

@@ -1,3 +1,4 @@
+{% load render_table from django_tables2 %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,17 +10,21 @@
 
     <!-- <link href="assets/less/styles.less" rel="stylesheet/less" media="all"> -->
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
     <script sc="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <style>
     #id_to {
-    	width: 330px;
+    	width: 370px;
     	height: 30px;
     }
     #id_sms_text {
-    	width: 330px;
+    	width: 370px;
     	height: 110px;
+    }
+    div.panel.panel-primary {
+    	width: 450px;
     }
     </style>
     
@@ -49,8 +54,9 @@
 						<p style="color:green">
 					    	{% for message in messages %}
 					    		{{ message }}
-					    	{% endfor %}
-					    </p>
+					    	{% endfor %}<br><br>
+					    </p><br><br><br>
+					    {% render_table grid_data %}
 					    <a href="{% url 'excel' %}">Download CSV</a>
 					</center>
 					
@@ -66,7 +72,6 @@
 		</div>
 		</form>
 	</div>
- </div>
-      
+ </div>      
 </body>
 </html>
