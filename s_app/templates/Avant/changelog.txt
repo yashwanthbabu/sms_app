@@ -1,0 +1,36 @@
+Avant 1.3
+Changelog
+1.2.2 => 1.3
+------------
+
+
+- Added Megamenu Support new plugin
+- Added New Button Styles: Focused Icon Buttons new feature
+- Updated to Bootstrap 3.2
+- Updated to FontAwesome 4.1
+- Better IE7 Transparency Support
+- Minor bugfixes
+
+
+
+File Changes
+------------
+LESS Files
+
+In assets/less/
+- extend-core.less
+- topnav.less
+- variables.less
+- all files in assets/less/bootstrap/
+
+In JS:
+- assets/js/bootstrap.js
+- assets/js/bootstrap.min.js
+
+In HTML:
+- ui-buttons
+- layout-horizontal
+- layout-horizontal2
+- extras-chatroom
+- extras-search
+- extras-inbox
