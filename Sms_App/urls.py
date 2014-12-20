@@ -15,4 +15,6 @@ urlpatterns = patterns('',
                        url(r'^signin/', signin, name='signin'),
                        url(r'sms/', 's_app.views.sms_view', name="sms"),
                        url(r'excel/', 's_app.views.excelview', name="excel"),
+                       url(r"^logout/", 's_app.views.logout', name='logout'),
+                       url('', include('django.contrib.auth.urls', namespace='auth')),
                        )
