@@ -10,6 +10,18 @@
     <!-- <link href="assets/less/styles.less" rel="stylesheet/less" media="all"> -->
     <link rel="stylesheet" href="/static/css/styles.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+    <script sc="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <style>
+    #id_to {
+    	width: 330px;
+    	height: 30px;
+    }
+    #id_sms_text {
+    	width: 330px;
+    	height: 30px;
+    }
+    </style>
     
     <!-- <script type="text/javascript" src="assets/js/less.js"></script> -->
 </head>
@@ -26,7 +38,7 @@
 
 		<div class="panel-body">
 			<h4 class="text-center" style="margin-bottom: 25px;">Please enter particular for sms</h4>
-				<form action="/sms/" method="post">{% csrf_token %}
+				<form action="/sms/" method="post" id="smsform">{% csrf_token %}
 					<center>
 						<div class="form-group">
 							<div class="col-sm-12">
@@ -34,8 +46,9 @@
 										{{ form.as_p }}
 								</div>
 							</div>
-						</div>
-</center>
+						</div><br><br></center>
+
+
 						
 					
 					
