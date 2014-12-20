@@ -6,11 +6,13 @@ from s_app.views import signin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'Sms_App.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+                       # Examples:
+                       # url(r'^$', 'Sms_App.views.home', name='home'),
+                       # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+                       url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^signin/', signin, name='signin'),
-)
+                       url(r'^signin/', signin, name='signin'),
+                       url(r'sms/', 's_app.views.sms_view', name="sms"),
+                       url(r'excel/', 's_app.views.excelview', name="excel"),
+                       )
