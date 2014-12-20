@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 
@@ -12,6 +12,7 @@ def signin(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
+                login(request, user)
                 return redirect('home')
             else:
                 messages.add_message(
