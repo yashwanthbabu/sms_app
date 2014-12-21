@@ -14,7 +14,7 @@ import datetime
 
 
 def excelview(request):
-    """excel sheet generation"""
+    """Generates ExcelSheet and downloads the ExcelSheet"""
     user_smses = request.user.sms_set.all()
     user_record = [['From', 'To', 'Message', 'Status']]
     for sms in user_smses:
@@ -81,6 +81,8 @@ def chart(request):
 
 
 class BarView(HighChartsBarView):
+    """Functionality to filter by month wise and 
+       day wise in chart"""
 
     @property
     def title(self):
