@@ -43,7 +43,7 @@
 	<a href="index.htm"><img src="/static/img/logo-big.png" alt="Logo" class="brand" /></a>
 	<center> 
 		<h3>
-			Logged in as: <span style="color:#c60e3b;">{{ user }}<span>
+			Logged in as: <span style="color:#c60e3b;">{{ user|capfirst }}<span>
 		</h3>
 	</center>
 	<div class="panel panel-primary">
@@ -63,9 +63,6 @@
 					    		{{ message }}
 					    	{% endfor %}
 					    </p><br>
-
-      <br>
-					    <a href="{% url 'excel' %}">Download CSV</a>
 					</center>
 					
 		</div>

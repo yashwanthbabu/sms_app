@@ -36,9 +36,16 @@
 <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
 <script type="text/javascript">
 $(function () {
-    $.getJSON("{% url 'bar' %}", function(data) {
-        $('#sincos').highcharts(data);
-    });
+    if(document.location.search == '?filter=month') {
+        $.getJSON("{% url 'bar' %}?filter=month", function(data) {
+            $('#sincos').highcharts(data);
+        });
+    } 
+    else{
+        $.getJSON("{% url 'bar' %}", function(data) {
+            $('#sincos').highcharts(data);
+        });
+    }   
 });
 </script>
 
@@ -641,7 +648,18 @@ $(function () {
                             </div>
                             <div class="panel-body">
                                 <div id="sincos" style="height: 300px"></div>
-                                <p id="hoverdata" class="text-center">Mouse hovers at (<span id="x">0</span>, <span id="y">0</span>). <span id="clickdata"></span></p>
+                                <form action="{% url 'chart' %}" method="get">
+                                    <select name="filter">
+                                        <option selected>Filter by</option>
+                                        <option value="month">Month</option>
+                                        <option value="day">Day</option>
+                                    </select>
+                                    <input type="submit" value="Filter">
+                                </form>
+                                <br/>
+                                <h3 id="hoverdata" class="text-center">
+                                    SMS history
+                                </h3>
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>

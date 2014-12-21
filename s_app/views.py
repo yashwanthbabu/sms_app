@@ -8,6 +8,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+import datetime
 
 
 def excelview(request):
@@ -20,6 +23,7 @@ def excelview(request):
     return ExcelResponse(user_record, 'My_Sms_Sheet')
 
 
+@login_required
 def sms_view(request):
     """sends the sms to the given mobile number"""
     if request.method == "POST":
@@ -39,6 +43,8 @@ def sms_view(request):
 
 def signin(request):
     """ signin's the user """
+    if request.user.is_authenticated():
+        return redirect('sms')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -67,20 +73,45 @@ def logout(request):
     return redirect(reverse("signin"), args=[])
 
 
+@login_required
 def chart(request):
-    return render(request, 'Avant/HTML/charts-flot.htm', {'grid_data': request.user.sms_set.all()})
+    return render(request,
+                  'Avant/HTML/charts-flot.htm',
+                  {'grid_data': request.user.sms_set.all()})
 
 
 class BarView(HighChartsBarView):
 
     @property
+    def title(self):
+        return 'SMS stats on %s' % datetime.date.today()
+
+    @property
+    def y_axis_title(self):
+        return 'SMS Count'
+
+    @property
     def series(self):
+
         smses = self.request.user.sms_set.all()
         date_sent = [sms.sms_sent_time for sms in smses]
         get_unique_date = set([u.date() for u in date_sent])
+
+        if self.request.GET.get('filter') == 'month':
+            get_unique_date = set(
+                [datetime.datetime(u.year, u.month, 1) for u in date_sent])
+
         result = []
         for date in get_unique_date:
-            result.append({'name': date,
-                           'data': [self.request.user.sms_set.filter(
-                               sms_sent_time__startswith=date).count()]})
+            if self.request.GET.get('filter') == 'month':
+                result.append({'name': str(date.year) + '-' + str(date.month),
+                               'data': [self.request.user.sms_set.filter(
+                                   sms_sent_time__year=date.year,
+                                   sms_sent_time__month=date.month).count()]})
+            else:
+                result.append({'name': date,
+                               'data': [self.request.user.sms_set.filter(
+                                   sms_sent_time__year=date.year,
+                                   sms_sent_time__month=date.month,
+                                   sms_sent_time__day=date.day).count()]})
         return result
