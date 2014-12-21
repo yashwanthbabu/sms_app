@@ -1,4 +1,3 @@
-{% load render_table from django_tables2 %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -10,14 +9,12 @@
 
     <!-- <link href="assets/less/styles.less" rel="stylesheet/less" media="all"> -->
     <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="/static/css/tables.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
     <script sc="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
     <style>
     #id_to {
-<<<<<<< HEAD
-    	width: 370px;
+    	width: 400px;
     	height: 30px;
     }
     #id_sms_text {
@@ -26,7 +23,6 @@
     }
     div.panel.panel-primary {
     	width: 450px;
-=======
     	width: 400px;
     	height: 30px;
     }
@@ -36,7 +32,6 @@
     }
     div.panel.panel-primary {
     	width: 480px;
->>>>>>> master
     }
     </style>
     
@@ -53,7 +48,7 @@
 	</center>
 	<div class="panel panel-primary">
 		<div class="panel-body">
-			<h4 class="text-center" style="margin-bottom: 25px;">Please enter particular for sms</h4>
+			<h4 class="text-center" style="margin-bottom: 25px;">Enter particular to send sms</h4>
 				<form action="/sms/" method="post" id="smsform">{% csrf_token %}
 					<center>
 						<div class="form-group">
@@ -68,7 +63,33 @@
 					    		{{ message }}
 					    	{% endfor %}
 					    </p><br>
-					    {% render_table grid_data %}
+
+      <table class="table table-bordered">
+    	<thead>
+        <tr>
+            <th class="col-sm-2"><center>FROM</center></th>
+            <th class="col-sm-2"><center>TO</center></th>
+            <th class="col-sm-2"><center>SMS TEXT</center></th>
+            <th class="col-sm-2"><center>STATUS</center></th>
+            <th class="col-sm-4"><center>TIME SENT</center></th>
+
+        </tr>
+    	</thead>
+    	<tbody>
+    	{% if grid_data %}
+            	{% for sms in grid_data %}
+            <tr>
+
+                <td><center>{{ sms.user }}</center></td>
+                <td><center>{{ sms.to }}</center></td>
+                <td><center>{{ sms.sms_text }}</center></td>
+                <td><center>{{ sms.status }}</center></td>
+                <td><center>{{ sms.sms_sent_time }}</center></td>
+            </tr>
+            {% endfor %}
+                {% endif %}
+    	</tbody>
+	</table><br>
 					    <a href="{% url 'excel' %}">Download CSV</a>
 					</center>
 					

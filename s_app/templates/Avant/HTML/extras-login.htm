@@ -23,7 +23,7 @@
 	<div class="panel panel-primary">
 
 		<div class="panel-body">
-			<h4 class="text-center" style="margin-bottom: 25px;">Log in to get started or <a href="extras-signupform.htm">Sign Up</a></h4>
+			<h4 class="text-center" style="margin-bottom: 25px;">Log in to get started</h4>
 				<form data-parsley-validate action="{% url 'signin' %}" method="post" class="form-horizontal" style="margin-bottom: 0px !important;">{% csrf_token %}
 						<div class="form-group">
 							<div class="col-sm-12">
@@ -48,10 +48,8 @@
 					
 		</div>
 		<div class="panel-footer">
-			<a href="extras-forgotpassword.htm" class="pull-left btn btn-link" style="padding-left:0">Forgot password?</a>
 			
 			<div class="pull-right">
-				<a href="#" class="btn btn-default">Reset</a>
 				<input type="submit" class="btn btn-primary" value="Login" />
 			</div>
 		</div>
