@@ -8,6 +8,7 @@ gnureadline==6.3.3
 ipdb==0.8
 ipython==2.3.1
 phonenumbers==7.0.1
+pytz==2014.10
 six==1.8.0
 wsgiref==0.1.2
 xlwt==0.7.5

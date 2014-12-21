@@ -72,6 +72,7 @@
 				{% if user.is_authenticated %}
                     <a href="{% url 'auth:logout' %}" class="btn btn-primary"> LOGOUT</a> &nbsp;
                 {% endif %}
+                <a href="{% url 'chart' %}" class="btn btn-primary">Chart</a> &nbsp;
 				<input type="submit" class="btn btn-primary" value="SEND SMS" />
 			</div>
 		</div>

@@ -49,6 +49,12 @@ $(function () {
 });
 </script>
 
+<style>
+.btn {
+    border-radius: 5px;
+}
+</style>
+
 <!-- <script type="text/javascript" src="assets/js/less.js"></script> -->
 </head>
 
@@ -649,12 +655,12 @@ $(function () {
                             <div class="panel-body">
                                 <div id="sincos" style="height: 300px"></div>
                                 <form action="{% url 'chart' %}" method="get">
-                                    <select name="filter">
+                                    <select name="filter" class="btn btn-primary">
                                         <option selected>Filter by</option>
                                         <option value="month">Month</option>
                                         <option value="day">Day</option>
                                     </select>
-                                    <input type="submit" value="Filter">
+                                    <input type="submit" class="btn btn-primary" value="Filter">
                                 </form>
                                 <br/>
                                 <h3 id="hoverdata" class="text-center">
@@ -682,6 +688,7 @@ $(function () {
                                             <td>
                                                 <center>
                                                 {% ifequal sms.status True %} Sent {% endifequal %}
+                                                {% ifequal sms.status False %} Not Sent {% endifequal %}
                                                 </center>
                                             </td>
                                             <td><center>{{ sms.sms_sent_time }}</center></td>
