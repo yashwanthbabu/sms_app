@@ -34,7 +34,7 @@ def sms_view(request):
             return redirect('sms')
     else:
         form = SmsForm()
-    return render(request, 'sms.html', {'form': form, 'grid_data': request.user.sms_set.all()})
+    return render(request, 'sms.html', {'form': form})
 
 
 def signin(request):
@@ -68,7 +68,7 @@ def logout(request):
 
 
 def chart(request):
-    return render(request, 'Avant/HTML/charts-flot.htm')
+    return render(request, 'Avant/HTML/charts-flot.htm', {'grid_data': request.user.sms_set.all()})
 
 
 class BarView(HighChartsBarView):

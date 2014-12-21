@@ -642,88 +642,39 @@ $(function () {
                             <div class="panel-body">
                                 <div id="sincos" style="height: 300px"></div>
                                 <p id="hoverdata" class="text-center">Mouse hovers at (<span id="x">0</span>, <span id="y">0</span>). <span id="clickdata"></span></p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-2"><center>FROM</center></th>
+                                        <th class="col-sm-2"><center>TO</center></th>
+                                        <th class="col-sm-2"><center>SMS TEXT</center></th>
+                                        <th class="col-sm-2"><center>STATUS</center></th>
+                                        <th class="col-sm-4"><center>TIME SENT</center></th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if grid_data %}
+                                            {% for sms in grid_data %}
+                                        <tr>
+
+                                            <td><center>{{ sms.user|capfirst }}</center></td>
+                                            <td><center>{{ sms.to }}</center></td>
+                                            <td><center>{{ sms.sms_text }}</center></td>
+                                            <td>
+                                                <center>
+                                                {% ifequal sms.status True %} Sent {% endifequal %}
+                                                </center>
+                                            </td>
+                                            <td><center>{{ sms.sms_sent_time }}</center></td>
+                                        </tr>
+                                        {% endfor %}
+                                            {% endif %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4>Multiple Graph Types In One</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div id="multiple" style="height: 300px" class="centered"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4>Live Dynamic</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div id="realtime-updates" style="height: 300px" class="centered"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4>Stacking</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div id="stacking" style="height: 300px" class="centered"></div>
-
-                                <p class="stackControls">
-                                    <button class="btn btn-primary">With stacking</button>
-                                    <button class="btn btn-primary">Without stacking</button>
-                                </p>
-                                
-                                <p class="graphControls">
-                                    <button class="btn btn-info">Bars</button>
-                                    <button class="btn btn-info">Lines</button>
-                                    <button class="btn btn-info">Lines with steps</button>
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="panel panel-primary">
-                          <div class="panel-heading">
-                                <h4>Pie Chart</h4>
-                          </div>
-                          <div class="panel-body">
-                                <div id="graph0" style="width:100%; height: 300px" class="centered"></div>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="panel panel-primary">
-                          <div class="panel-heading">
-                                <h4>Donut</h4>
-                          </div>
-                          <div class="panel-body">
-                                <div id="donut" style="width:100%; height: 300px" class="centered"></div>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="panel panel-primary">
-                          <div class="panel-heading">
-                                <h4>Interactive</h4>
-                          </div>
-                          <div class="panel-body">
-                                <div id="interactive" style="width:100%; height: 300px" class="centered"></div>
-                          </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div> <!-- container -->

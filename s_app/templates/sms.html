@@ -64,32 +64,7 @@
 					    	{% endfor %}
 					    </p><br>
 
-      <table class="table table-bordered">
-    	<thead>
-        <tr>
-            <th class="col-sm-2"><center>FROM</center></th>
-            <th class="col-sm-2"><center>TO</center></th>
-            <th class="col-sm-2"><center>SMS TEXT</center></th>
-            <th class="col-sm-2"><center>STATUS</center></th>
-            <th class="col-sm-4"><center>TIME SENT</center></th>
-
-        </tr>
-    	</thead>
-    	<tbody>
-    	{% if grid_data %}
-            	{% for sms in grid_data %}
-            <tr>
-
-                <td><center>{{ sms.user }}</center></td>
-                <td><center>{{ sms.to }}</center></td>
-                <td><center>{{ sms.sms_text }}</center></td>
-                <td><center>{{ sms.status }}</center></td>
-                <td><center>{{ sms.sms_sent_time }}</center></td>
-            </tr>
-            {% endfor %}
-                {% endif %}
-    	</tbody>
-	</table><br>
+      <br>
 					    <a href="{% url 'excel' %}">Download CSV</a>
 					</center>
 					
