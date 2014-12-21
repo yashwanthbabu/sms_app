@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, render_to_response
 
+from .models import Sms
 from .forms import SmsForm
 from excel_response import ExcelResponse
 from django.contrib.auth import authenticate, login
@@ -9,20 +10,22 @@ from django.contrib import messages
 
 
 def excelview(request):
-    """Excel sheet generation"""
+    """excel sheet generation"""
+    import ipdb; ipdb.set_trace()
     user_smses = request.user.sms_set.all()
-    user_record = [['From', 'To', 'Message']]
+    user_record = [['From', 'To', 'Message', 'Status']]
     for sms in user_smses:
         user_record.append(
-            [sms.user.username, '+' + str(sms.to.country_code) + ' ' + str(sms.to.national_number), sms.sms_text])
-    return ExcelResponse(user_record, 'my_data')
+            [sms.user.username, '+' + str(sms.to.country_code) + ' ' + str(sms.to.national_number), sms.sms_text, sms.status])
+    return ExcelResponse(user_record, 'My_Sms_Sheet')
 
 
 def sms_view(request):
-    """Sends an sms to the given mobile number"""
+    """sends the sms to the given mobile number"""
     if request.method == "POST":
         form = SmsForm(request.POST)
         if form.is_valid():
+            to = form.cleaned_data.get('to')
             user = form.save(commit=False)
             user.user = request.user
             user.status = True
@@ -32,11 +35,11 @@ def sms_view(request):
             return redirect('sms')
     else:
         form = SmsForm()
-    return render(request, 'sms.html', {'form': form})
+    return render(request, 'sms.html', {'form': form, 'grid_data': request.user.sms_set.all()})
 
 
 def signin(request):
-    """ Signin's the user """
+    """ signin's the user """
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
