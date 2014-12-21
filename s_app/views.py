@@ -11,7 +11,6 @@ from django.contrib import messages
 
 def excelview(request):
     """excel sheet generation"""
-    import ipdb; ipdb.set_trace()
     user_smses = request.user.sms_set.all()
     user_record = [['From', 'To', 'Message', 'Status']]
     for sms in user_smses:

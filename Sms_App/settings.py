@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     's_app',
-    'django_tables2'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
