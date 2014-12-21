@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponse, render_to_response
+from django.shortcuts import render, redirect
 
-from .models import Sms
 from .forms import SmsForm
 from excel_response import ExcelResponse
+from highcharts.views import HighChartsBarView
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
@@ -11,7 +12,6 @@ from django.contrib import messages
 
 def excelview(request):
     """excel sheet generation"""
-    import ipdb; ipdb.set_trace()
     user_smses = request.user.sms_set.all()
     user_record = [['From', 'To', 'Message', 'Status']]
     for sms in user_smses:
@@ -25,7 +25,6 @@ def sms_view(request):
     if request.method == "POST":
         form = SmsForm(request.POST)
         if form.is_valid():
-            to = form.cleaned_data.get('to')
             user = form.save(commit=False)
             user.user = request.user
             user.status = True
@@ -66,3 +65,22 @@ def logout(request):
     auth_logout(request)
     messages.success(request, "You Have Successfully Logged Out")
     return redirect(reverse("signin"), args=[])
+
+
+def chart(request):
+    return render(request, 'Avant/HTML/charts-flot.htm')
+
+
+class BarView(HighChartsBarView):
+
+    @property
+    def series(self):
+        smses = self.request.user.sms_set.all()
+        date_sent = [sms.sms_sent_time for sms in smses]
+        get_unique_date = set([u.date() for u in date_sent])
+        result = []
+        for date in get_unique_date:
+            result.append({'name': date,
+                           'data': [self.request.user.sms_set.filter(
+                               sms_sent_time__startswith=date).count()]})
+        return result

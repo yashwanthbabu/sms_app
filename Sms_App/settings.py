@@ -36,8 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     's_app',
-    'django_tables2'
+
+    'django_tables2',
+    'highcharts',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

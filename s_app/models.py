@@ -12,4 +12,4 @@ class Sms(models.Model):
     sms_sent_time = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return str(self.user) + '-' + str(self.to) + '-' + str(self.status)
+        return str(self.user) + '-' + str(self.to) + '-' + str(self.status) + str(self.sms_sent_time)
