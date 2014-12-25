@@ -19,5 +19,6 @@ urlpatterns = patterns('',
                        url(r'get_chart', BarView.as_view(), name='bar'),
                        url(r'chart/', 's_app.views.chart', name="chart"),
                        url(r"^logout/", 's_app.views.logout', name='logout'),
+                       url(r'dashboard/', 's_app.views.dashboard', name='dashboard'),
                        url('', include('django.contrib.auth.urls', namespace='auth')),
                        )

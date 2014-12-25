@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 
 from .forms import SmsForm
 from excel_response import ExcelResponse
@@ -25,7 +25,9 @@ def excelview(request):
 
 @login_required
 def sms_view(request):
-    """sends the sms to the given mobile number"""
+    """sends the sms to the given mobile number.
+        If the request is GET, it directly goes to else part
+        If the request is POST, it executes the if part"""
     if request.method == "POST":
         form = SmsForm(request.POST)
         if form.is_valid():
@@ -41,6 +43,11 @@ def sms_view(request):
     return render(request, 'sms.html', {'form': form})
 
 
+def dashboard(request):
+    all_data = request.user.sms_set.all()
+    return render(request,'Avant/HTML/index.htm', {'all_data': all_data, 'grid_data': request.user.sms_set.all()[:5]})
+
+
 def signin(request):
     """ signin's the user """
     if request.user.is_authenticated():
@@ -53,7 +60,7 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('sms')
+                return redirect('dashboard')
             else:
                 messages.add_message(
                     request, messages.INFO, 'Your account is invalid')
@@ -75,8 +82,10 @@ def logout(request):
 
 @login_required
 def chart(request):
+    """shows SMS chart and
+       Shows the grid table of the SMS history"""
     return render(request,
-                  'Avant/HTML/charts-flot.htm',
+                  'Avant/HTML/charts-flot.html',
                   {'grid_data': request.user.sms_set.all()})
 
 
