@@ -1,14 +1,20 @@
 Django==1.6
+Pillow==2.6.1
+PyPDF2==1.23
 django-braces==1.4.0
 django-excel-response==1.0
 -e git+https://github.com/novapost/django-highcharts.git@a24af3422c9c0d118b93ede2cc2e889bde8d97ce#egg=django_highcharts-master
 django-phonenumber-field==0.6
 django-tables2==0.15.0
 gnureadline==6.3.3
+html5lib==0.999
 ipdb==0.8
 ipython==2.3.1
 phonenumbers==7.0.1
+pisa==3.0.33
 pytz==2014.10
+reportlab==3.1.44
 six==1.8.0
 wsgiref==0.1.2
+xhtml2pdf==0.0.6
 xlwt==0.7.5
