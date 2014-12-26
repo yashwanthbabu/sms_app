@@ -296,6 +296,7 @@ $(function () {
                     
                     <div class="btn-group hidden-xs">
                         <a href='{% url 'excel' %}' class="btn btn-default dropdown-toggle" data-toggle='dropdown'><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as Excel</span> <span class="caret"></span></a>
+                        <a href="{% url 'pdf' %}" target="_blank" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as PDF</span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Text File (*.txt)</a></li>
                             <li><a href="#">Excel File (*.xlsx)</a></li>

@@ -297,6 +297,7 @@
                     
                     <div class="btn-group hidden-xs">
                         <a href='{% url 'excel' %}' class="btn btn-default dropdown-toggle" data-toggle='dropdown'><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as Excel</span> <span class="caret"></span></a>
+                        <a href="{% url 'pdf' %}" target="_blank" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as PDF</span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Text File (*.txt)</a></li>
                             <li><a href="#">Excel File (*.xlsx)</a></li>
@@ -310,15 +311,19 @@
 
 
 <center>        
-            <div class="panel panel-primary" style="background-color: #9358ac;">
-        <div class="panel-body">
-            <h4 class="text-center" style="margin-bottom: 25px;">Enter particular to send sms</h4>
-                <form action="/sms/" method="post" id="smsform">{% csrf_token %}
+    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                              <h4><i class="fa fa-envelope"></i> SMS FORM </h4>
+
+                        </div>
+                        <div class="panel-body">
+                            <h4 class="text-center" style="margin-bottom: 25px;">Enter particular to send sms</h4>
+                            <form action="/sms/" method="post" id="smsform">{% csrf_token %}
                     <center>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                        {{ form.as_p }}
+                                        {{ form.as_p }}<br>
                                 </div>
                             </div>
                         </div><br><br>
@@ -326,19 +331,14 @@
                             {% for message in messages %}
                                 {{ message }}
                             {% endfor %}
-                        </p><br>
-                    </center>
+                        </p><br><br>
                     
-        </div>
-        <div class="panel-footer">
-            
-            <div class="pull-right">
+                            <input type="submit" class="btn btn-primary btn-sm pull-right" value="SEND SMS">
+                        </div>
+                    </div>
+                    </form>
+                </div>
 
-                <input type="submit" class="btn btn-primary" value="SEND SMS" />
-            </div>
-        </div>
-        </form>
-    </div>
 </center>
         </div> <!-- container -->
     </div> <!--wrap -->

@@ -50,7 +50,7 @@ def sms_view(request):
         form = SmsForm()
     return render(request, 'sms.html', {'form': form})
 
-
+@login_required
 def dashboard(request):
     users = User.objects.all().count()
     smses = request.user.sms_set.all()
