@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SMS DASHBOARD - PDF</title>
+            <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+            <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+            <link href="{% static 'demo/variations/default.css' %}" rel='stylesheet' type='text/css' media='all' id='styleswitcher'>
+        <style type="text/css">
+            @page {
+                size: {{ pagesize }};
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                    table-layout: 50px;
+                }
+            }
+            th {
+                font-size: 15px;
+            }
+            td {
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <table class="table table-bordered" style="border-color: blue;">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-2"><center>FROM</center></th>
+                                        <th class="col-sm-2"><center>TO</center></th>
+                                        <th class="col-sm-2"><center>SMS TEXT</center></th>
+                                        <th class="col-sm-2"><center>STATUS</center></th>
+                                        <th class="col-sm-4"><center>TIME SENT</center></th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in mylist %}
+                                        <tr>
+
+                                            <td><center>{{ item.user|capfirst }}</center></td>
+                                            <td><center>{{ item.to }}</center></td>
+                                            <td><center>{{ item.sms_text }}</center></td>
+                                            <td>
+                                                <center>
+                                                {% ifequal item.status True %} <span class="label label-success"> Sent </span>{% endifequal %}
+                                            
+                                                {% ifnotequal item.status True %}<span class="label label-danger"> Not Sent </span>{% endifnotequal %}</td>
+                                                </center>
+                                            </td>
+                                            <td><center>{{ item.sms_sent_time }}</center></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+        </div>
+        <div id="footerContent">
+            {%block page_foot%}
+                Page <pdf:pagenumber>
+            {%endblock%}
+        </div>
+    </body>
+</html>

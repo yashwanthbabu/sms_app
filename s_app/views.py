@@ -5,12 +5,20 @@ from excel_response import ExcelResponse
 from highcharts.views import HighChartsBarView
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.template import Context
 
 import datetime
+import cStringIO as StringIO
+import ho.pisa as pisa
+
 
 
 def excelview(request):
@@ -44,8 +52,22 @@ def sms_view(request):
 
 
 def dashboard(request):
+    users = User.objects.all().count()
+    smses = request.user.sms_set.all()
+    date_sent = [sms.sms_sent_time for sms in smses]
+    get_unique_date = set([u.date() for u in date_sent])
+    for date in get_unique_date:
+        smses_in_year = request.user.sms_set.filter(sms_sent_time__year=date.year).count()
+        smses_in_month = request.user.sms_set.filter(sms_sent_time__year=date.year,
+                                                     sms_sent_time__month=date.month).count()
+        smses_in_day = request.user.sms_set.filter(
+                                   sms_sent_time__year=date.year,
+                                   sms_sent_time__month=date.month,
+                                   sms_sent_time__day=date.day).count()
+        print smses_in_year
+
     all_data = request.user.sms_set.all()
-    return render(request,'Avant/HTML/index.htm', {'all_data': all_data, 'grid_data': request.user.sms_set.all()[:5]})
+    return render(request,'Avant/HTML/index.htm', {'smses_in_year': smses_in_year, 'smses_in_day': smses_in_day, 'smses_in_month': smses_in_month, 'all_data': all_data, 'users': users, 'grid_data': request.user.sms_set.all()[:5]})
 
 
 def signin(request):
@@ -111,6 +133,7 @@ class BarView(HighChartsBarView):
         if self.request.GET.get('filter') == 'month':
             get_unique_date = set(
                 [datetime.datetime(u.year, u.month, 1) for u in date_sent])
+            print get_unique_date
 
         result = []
         for date in get_unique_date:
@@ -126,3 +149,28 @@ class BarView(HighChartsBarView):
                                    sms_sent_time__month=date.month,
                                    sms_sent_time__day=date.day).count()]})
         return result
+
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html  = template.render(context)
+    result = StringIO.StringIO()
+
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
+
+
+
+def myview(request):
+    #Retrieve data or whatever you need
+    results = request.user.sms_set.all()
+    return render_to_pdf(
+            'pdf.html',
+            {
+                'pagesize':'A4',
+                'mylist': results,
+            }
+        )

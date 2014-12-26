@@ -70,8 +70,7 @@ $(function () {
         </div>
 
         <ul class="nav navbar-nav pull-right toolbar">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">{{ user|capfirst }}</span></a>
-                &nsbp;
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">{{ user|capfirst }}</span></a> &nbsp; 
                 <div class="pull-right">
                 {% if user.is_authenticated %}
                     <a href="{% url 'auth:logout' %}"> LOGOUT</a> &nbsp;
@@ -97,6 +96,9 @@ $(function () {
                 <li class="active"><a href="/chart/"><i class="fa fa-bar-chart-o"></i> <span>Chart</span></a>
    
                 </li> 
+
+                <li><a href="/sms/"><i class="fa fa-envelope"></i>
+                <span>SMS FORM</span></a></li>
                 
             </ul>
             <!-- END SIDEBAR MENU -->
@@ -285,7 +287,7 @@ $(function () {
         <div id="page-heading">
             <ol class="breadcrumb">
                 <li><a href="index.htm"> SMS Dashboard</a></li>
-                <li class='active'>SMS Chart</li>
+                <li class='active'>SMS Chart and SMS History</li>
             </ol>
 
             <h1>SMS Chart</h1>
@@ -331,7 +333,7 @@ $(function () {
                                 <h1 id="smshistory">
                                     SMS history
                                 </h1>
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" style="border-color: blue;">
                                     <thead>
                                     <tr>
                                         <th class="col-sm-2"><center>FROM</center></th>
@@ -352,8 +354,9 @@ $(function () {
                                             <td><center>{{ sms.sms_text }}</center></td>
                                             <td>
                                                 <center>
-                                                {% ifequal sms.status True %} Sent {% endifequal %}
-                                                {% ifequal sms.status False %} Not Sent {% endifequal %}
+                                                {% ifequal sms.status True %} <span class="label label-success"> Sent </span>{% endifequal %}
+                                            
+                                                {% ifnotequal sms.status True %}<span class="label label-danger"> Not Sent </span>{% endifnotequal %}</td>
                                                 </center>
                                             </td>
                                             <td><center>{{ sms.sms_sent_time }}</center></td>
