@@ -30,9 +30,9 @@
 
 <link rel='stylesheet' type='text/css' href="{% static 'plugins/form-daterangepicker/daterangepicker-bs3.css' %}"/> 
 <link rel='stylesheet' type='text/css' href="{% static 'plugins/fullcalendar/fullcalendar.css' %}" /> 
-<link rel='stylesheet' type='text/css' href='assets/plugins/form-markdown/css/bootstrap-markdown.min.css' /> 
-<link rel='stylesheet' type='text/css' href='assets/plugins/codeprettifier/prettify.css' /> 
-<link rel='stylesheet' type='text/css' href='assets/plugins/form-toggle/toggles.css' /> 
+<link rel='stylesheet' type='text/css' href="{% static 'plugins/form-markdown/css/bootstrap-markdown.min.css' %}" /> 
+<link rel='stylesheet' type='text/css' href="{% static 'plugins/codeprettifier/prettify.css' %}" /> 
+<link rel='stylesheet' type='text/css' href="{% static 'plugins/form-toggle/toggles.css' %}" /> 
 
 <script type="text/javascript" src="{% static 'js/less.js' %}"></script>
 
@@ -139,6 +139,7 @@
 
                                 <table class="table table-bordered" style="border-color: blue;">
                                     <thead>
+                                        
                                     <tr>
                                         <th class="col-sm-2"><center>FROM</center></th>
                                         <th class="col-sm-2"><center>TO</center></th>
@@ -149,10 +150,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% if sms_history %}
-                                            {% for sms in sms_history %}
+                                            
                                         <tr>
-
+                                            {% for sms in sms_history %}
                                             <td><center>{{ sms.user|capfirst }}
                                                 </center></td>
                                             <td><center>{{ sms.to }}</center></td>
@@ -166,8 +166,9 @@
                                             </td>
                                             <td><center>{{ sms.sms_sent_time }}</center></td>
                                         </tr>
+                                        {% empty %}
+                                        <h2 style="background-color:#f5f5f5; color: orange;"><center>No SMS's sent by this user</center></h2>
                                         {% endfor %}
-                                            {% endif %}
                                     </tbody>
                                 </table>
         </div> <!-- container -->

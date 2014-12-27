@@ -138,21 +138,33 @@
                                 <table class="table table-bordered" style="border-color: blue;">
                                     <thead>
                                     <tr>
-                                        <th class="col-sm-2">All USERS list</th>
+
+                                        <th class="col-sm-2"><center>USERNAME</center></th>
+                                        <th class="col-sm-2"><center>
+                                            SMS's SENT</center></th>
+                                        <th class="col-sm-2"><center>REGISTERED DATE</center></th>
+
                                         
 
                                     </tr>
                                     </thead>
                                     <tbody>
                                         
-                                    
+                                    {% if all_users %}
+                                        {% for users in all_users %}
                                         <tr>
 
-                                            <td>{% if all_users %}
-                                        {% for users in all_users %}
-                                        <h3><a href="{% url 'all_users_sms_history' users.id %}">{{ users|capfirst }}</a> </h3>
+                                            <td><center>
+                                        <a href="{% url 'all_users_sms_history' users.id %}">{{ users|capfirst }}
+                                            </a> 
+                                        </center></td>
+                                        <td><center>
+                                            {{ users.sms_set.count }}</center></td>
+                                        <td><center>
+                                            {{ users.date_joined }}
+                                        </center></td>
                                         {% endfor %}
-                                        {% endif %}</td>
+                                        {% endif %}
                                             
                                             
                                         </tr>

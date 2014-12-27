@@ -57,6 +57,7 @@ def dashboard(request):
     smses = request.user.sms_set.all()
     date_sent = [sms.sms_sent_time for sms in smses]
     get_unique_date = set([u.date() for u in date_sent])
+    
     # smses_in_year = [request.user.sms_set.filter(sms_sent_time__year=date.year).count() for date in get_unique_date]
     for date in get_unique_date:
         smses_in_year = request.user.sms_set.filter(sms_sent_time__year=date.year).count()
@@ -66,6 +67,8 @@ def dashboard(request):
                                    sms_sent_time__year=date.year,
                                    sms_sent_time__month=date.month,
                                    sms_sent_time__day=date.day).count()
+        day = request.user.sms_set.filter(sms_sent_time__day=date.day).count()
+        print day
 
     all_data = request.user.sms_set.all()
     return render(request,'Avant/HTML/index.htm', {'smses_in_year': smses_in_year, 'smses_in_month': smses_in_month, 'smses_in_day': smses_in_day, 'all_data': all_data, 'users': users, 'grid_data': request.user.sms_set.all()[:5]})
