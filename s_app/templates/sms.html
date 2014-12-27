@@ -98,6 +98,10 @@
 
                 <li class="active"><a href="/sms/"><i class="fa fa-envelope"></i>
                 <span>SMS FORM</span></a></li> 
+
+                {% if user.is_staff %}
+                <li><a href="/list_of_users/"><i class="fa fa-group"></i>LIST OF ALL USERS</a></li>
+                {% endif %}
                 
             </ul>
             <!-- END SIDEBAR MENU -->

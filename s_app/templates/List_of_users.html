@@ -1,0 +1,180 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SMS | LIST OF USERS</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Avant">
+    <meta name="author" content="The Red Team">
+
+    <!-- <link href="assets/less/styles.less" rel="stylesheet/less" media="all">  -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
+
+    <link href="{% static 'demo/variations/default.css' %}" rel='stylesheet' type='text/css' media='all' id='styleswitcher'> 
+    <!-- <link href="{% static 'demo/variations/default.css' %}" rel='stylesheet' type='text/css' media='all' id='headerswitcher'>  -->
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+    <!--[if lt IE 9]>
+        <link rel="stylesheet" href="assets/css/ie8.css">
+        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+        <script type="text/javascript" src="assets/plugins/charts-flot/excanvas.min.js"></script>
+    <![endif]-->
+
+    <!-- The following CSS are included as plugins and can be removed if unused-->
+
+<link rel='stylesheet' type='text/css' href="{% static 'plugins/form-daterangepicker/daterangepicker-bs3.css' %}"/> 
+<link rel='stylesheet' type='text/css' href="{% static 'plugins/fullcalendar/fullcalendar.css' %}" /> 
+<link rel='stylesheet' type='text/css' href='assets/plugins/form-markdown/css/bootstrap-markdown.min.css' /> 
+<link rel='stylesheet' type='text/css' href='assets/plugins/codeprettifier/prettify.css' /> 
+<link rel='stylesheet' type='text/css' href='assets/plugins/form-toggle/toggles.css' /> 
+
+<script type="text/javascript" src="{% static 'js/less.js' %}"></script>
+
+<style>
+    #id_to {
+        width: 400px;
+        height: 30px;
+    }
+    #id_sms_text {
+        width: 370px;
+        height: 110px;
+    }
+    div.panel.panel-primary {
+        width: 450px;
+        width: 400px;
+        height: 30px;
+    }
+    #id_sms_text {
+        width: 400px;
+        height: 110px;
+    }
+    div.panel.panel-primary {
+        width: 480px;
+    }
+    </style>
+</head>
+
+<body class="">
+
+
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+        <a id="leftmenu-trigger" class="tooltips" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a>
+        <a id="rightmenu-trigger" class="tooltips" data-toggle="tooltip" data-placement="left" title="Toggle Infobar"></a>
+
+        <div class="navbar-header pull-left">
+            <h3><a href="/dashboard/"> SMS DASHBOARD </a></h3>
+        </div>
+
+        <ul class="nav navbar-nav pull-right toolbar">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs">{{ user|capfirst }}</span></a> &nbsp; 
+                <div class="pull-right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'auth:logout' %}"> LOGOUT</a> &nbsp;
+                {% endif %}
+            </div>
+            
+            
+            
+        </ul>
+    </header>
+
+    <div id="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <nav id="page-leftbar" role="navigation">
+                <!-- BEGIN SIDEBAR MENU -->
+            <ul class="acc-menu" id="sidebar">
+                
+                <li class="divider"></li>
+                <li><a href="/dashboard/"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+
+
+                <li><a href="/chart/"><i class="fa fa-bar-chart-o"></i> <span>Chart</span></a></li>
+
+                <li><a href="/sms/"><i class="fa fa-envelope"></i>
+                <span>SMS FORM</span></a></li>
+                {% if user.is_staff %}
+                <li class="active"><a href="/all_users_sms_data"><i class="fa fa-group"></i>LIST OF ALL USERS</a></li> 
+                {% endif %}
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </nav>
+
+        
+<div id="page-content">
+    <div id='wrap'>
+        <div id="page-heading">
+            <ol class="breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="/dashboard/">SMS Dashboard</a></li>
+                    <li class="active">LIST OF ALL USERS</li>
+                </ol>
+            </ol>
+
+            <h1>LIST OF ALL USERS</h1>
+            <div class="options">
+                <div class="btn-toolbar">
+                    
+                    <div class="btn-group hidden-xs">
+                        <a href='{% url 'excel' %}' class="btn btn-default dropdown-toggle" data-toggle='dropdown'><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as Excel</span> <span class="caret"></span></a>
+                        <a href="{% url 'pdf' %}" target="_blank" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as PDF</span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Text File (*.txt)</a></li>
+                            <li><a href="#">Excel File (*.xlsx)</a></li>
+                            <li><a href="#">PDF File (*.pdf)</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+                                <table class="table table-bordered" style="border-color: blue;">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-sm-2">All USERS list</th>
+                                        
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    
+                                        <tr>
+
+                                            <td>{% if all_users %}
+                                        {% for users in all_users %}
+                                        <h3><a href="{% url 'all_users_sms_history' users.id %}">{{ users|capfirst }}</a> </h3>
+                                        {% endfor %}
+                                        {% endif %}</td>
+                                            
+                                            
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+        </div> <!-- container -->
+    </div> <!--wrap -->
+</center>
+</div> <!-- page-content -->
+
+
+</div> <!-- page-container -->
+
+<!--
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+<script>!window.jQuery && document.write(unescape('%3Cscript src="assets/js/jquery-1.10.2.min.js"%3E%3C/script%3E'))</script>
+<script type="text/javascript">!window.jQuery.ui && document.write(unescape('%3Cscript src="assets/js/jqueryui-1.10.3.min.js'))</script>
+-->
+
+
+</body>
+</html>

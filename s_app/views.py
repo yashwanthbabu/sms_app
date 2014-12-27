@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response
 
 from .forms import SmsForm
+from .models import Sms
 from excel_response import ExcelResponse
 from highcharts.views import HighChartsBarView
 
@@ -11,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template.loader import get_template
 from django.template import Context
 
@@ -56,6 +57,7 @@ def dashboard(request):
     smses = request.user.sms_set.all()
     date_sent = [sms.sms_sent_time for sms in smses]
     get_unique_date = set([u.date() for u in date_sent])
+    # smses_in_year = [request.user.sms_set.filter(sms_sent_time__year=date.year).count() for date in get_unique_date]
     for date in get_unique_date:
         smses_in_year = request.user.sms_set.filter(sms_sent_time__year=date.year).count()
         smses_in_month = request.user.sms_set.filter(sms_sent_time__year=date.year,
@@ -64,10 +66,9 @@ def dashboard(request):
                                    sms_sent_time__year=date.year,
                                    sms_sent_time__month=date.month,
                                    sms_sent_time__day=date.day).count()
-        print smses_in_year
 
     all_data = request.user.sms_set.all()
-    return render(request,'Avant/HTML/index.htm', {'smses_in_year': smses_in_year, 'smses_in_day': smses_in_day, 'smses_in_month': smses_in_month, 'all_data': all_data, 'users': users, 'grid_data': request.user.sms_set.all()[:5]})
+    return render(request,'Avant/HTML/index.htm', {'smses_in_year': smses_in_year, 'smses_in_month': smses_in_month, 'smses_in_day': smses_in_day, 'all_data': all_data, 'users': users, 'grid_data': request.user.sms_set.all()[:5]})
 
 
 def signin(request):
@@ -174,3 +175,20 @@ def myview(request):
                 'mylist': results,
             }
         )
+
+
+@login_required
+def all_users_sms_data(request):
+    all_users = User.objects.exclude(is_superuser=request.user)
+    return render(request, "List_of_users.html", {'all_users': all_users})
+
+
+@login_required
+def all_users_sms_history(request, user_id):
+    try:
+        all_users = User.objects.exclude(is_superuser=request.user)
+        users = User.objects.get(pk=user_id)
+        sms_history = Sms.objects.filter(user=users)
+        return render(request, "all_users_sms_history.html", {'all_users': all_users, 'sms_history': sms_history})
+    except User.DoesNotExist:
+        raise Http404
