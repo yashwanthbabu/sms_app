@@ -148,7 +148,7 @@ class BarView(HighChartsBarView):
                                'data': [self.request.user.sms_set.filter(
                                    sms_sent_time__year=date.year,
                                    sms_sent_time__month=date.month).count()]})
-            elif self.request.GET.get('filter') == 'day':
+            else:
                 result.append({'name': date,
                                'data': [self.request.user.sms_set.filter(
                                    sms_sent_time__year=date.year,
@@ -156,6 +156,7 @@ class BarView(HighChartsBarView):
                                    sms_sent_time__day=date.day).count()]})
 
         if 'from' in self.request.GET and 'to' in self.request.GET:
+            del result[:]
             to = datetime.datetime.strptime(self.request.GET.get('to'), '%m/%d/%Y') + datetime.timedelta(days=1)
             result.append({'name': 'Test',
                            'data': [self.request.user.sms_set.filter(
