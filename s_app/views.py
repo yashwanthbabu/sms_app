@@ -72,7 +72,6 @@ def dashboard(request):
 
     day = datetime.datetime.today()
     smses_in_day = request.user.sms_set.filter(sms_sent_time__day=day.day)
-    print sms_day
     all_data = request.user.sms_set.all()
     return render(request,'Avant/HTML/index.htm', {'smses_in_year': smses_in_year, 'smses_in_month': smses_in_month, 'smses_in_day': smses_in_day, 'all_data': all_data, 'users': users, 'grid_data': request.user.sms_set.all()[:5]})
 
