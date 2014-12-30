@@ -43,18 +43,47 @@
 <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
 <script type="text/javascript">
 $(function () {
-    if(document.location.search == '?filter=month') {
-        $.getJSON("{% url 'bar' %}?filter=month", function(data) {
-            $('#sincos').highcharts(data);
-        });
-    } 
+
+    var getLocation = function(href) {
+        var l = document.createElement("a");
+        l.href = href;
+        return l;
+    };
+
+    
+    var l = getLocation(window.location);
+    if (l.search!='undefined'){
+        path = "{% url 'bar' %}"+l.search
+    }
     else{
-        $.getJSON("{% url 'bar' %}", function(data) {
-            $('#sincos').highcharts(data);
-        });
-    }   
+        path = "{% url 'bar' %}"
+    }
+
+    $.getJSON(path, function(data) {
+        $('#sincos').highcharts(data);
+    });
+     
+    $("#period").change(function(){
+        window.location = "/chart?filter=" + $(this).val()
+    });
+    $( "#datepicker_1" ).datepicker();
+    $( "#datepicker_2" ).datepicker();
+
+    $("#filter_period").click(function(){
+        decode_date = $("form#filter").serialize();
+         window.location = "/chart/?" + decodeURIComponent(decode_date)
+  });
 });
 </script>
+
+<!-- Date Picker -->
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+ 
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<!-- Date Picker -->
+
 
 </head>
 
@@ -326,13 +355,16 @@ $(function () {
                             </div>
                             <div class="panel-body">
                                 <div id="sincos" style="height: 300px"></div>
-                                <form action="{% url 'chart' %}" method="get">
-                                    <select name="filter" class="btn btn-primary">
+                                <select name="filter" class="btn btn-primary" id="period">
                                         <option selected>Filter by</option>
                                         <option value="month">Month</option>
                                         <option value="day">Day</option>
                                     </select>
-                                    <input type="submit" class="btn btn-primary" value="Filter">
+                                <form action="" id="filter">
+                                    
+                                    <p>From: <input type="text" name="from" id="datepicker_1"></p>
+                                    <p>To: <input type="text" name="to" id="datepicker_2"></p>
+                                    <input type="button" class="btn btn-primary" id="filter_period" value="Filter">
                                 </form>
                                 <br/><br>
                                 <h1 id="smshistory">
