@@ -84,6 +84,12 @@ $(function () {
 
 <!-- Date Picker -->
 
+<style>
+#filter_id, #graph_id {
+    border-color: #4f8edc;
+}
+</style>
+
 
 </head>
 
@@ -319,7 +325,7 @@ $(function () {
     <div id='wrap'>
         <div id="page-heading">
             <ol class="breadcrumb">
-                <li><a href="index.htm"> SMS Dashboard</a></li>
+                <li><a href="/dashboard/"> SMS Dashboard</a></li>
                 <li class='active'>SMS Chart and SMS History</li>
             </ol>
 
@@ -354,18 +360,35 @@ $(function () {
                                 <h4>Interacting with data point</h4>
                             </div>
                             <div class="panel-body">
-                                <div id="sincos" style="height: 300px"></div>
-                                <select name="filter" class="btn btn-primary" id="period">
+                                <table border="1"  style="width:100%; height:57px;" class="box" id="filter_id">
+                                    <tr>
+                                        <td>
+                                <select name="filter" class="btn btn-primary" id="period" style="margin-top:5px;">
                                         <option selected>Filter by</option>
                                         <option value="month">Month</option>
                                         <option value="day">Day</option>
                                     </select>
-                                <form action="" id="filter">
+
+                                    <div class="pull-right">
+                                <form action="" id="filter" style="margin-top:5px;">
                                     
-                                    <p>From: <input type="text" name="from" id="datepicker_1"></p>
-                                    <p>To: <input type="text" name="to" id="datepicker_2"></p>
-                                    <input type="button" class="btn btn-primary" id="filter_period" value="Filter">
+                                    From: <input type="text" name="from" id="datepicker_1"> &nbsp; <i class="fa fa-calendar-o"></i>
+                                    To: <input type="text" name="to" id="datepicker_2"> &nbsp; <i class="fa fa-calendar-o"></i>
+                                    <input type="button" class="btn btn-primary" id="filter_period" value="Filter" style="border-radius:5px; height:30px;">
                                 </form>
+                            </div>
+                        </tr>
+                            </td>
+                                </table><br>
+                                <table border="1" style="width:100%" id="graph_id">
+                                    <tr>
+                                        <td>
+
+                                <div id="sincos" style="height: 300px"></div>
+                            </td>
+                        </tr>
+                    </table>
+                                
                                 <br/><br>
                                 <h1 id="smshistory">
                                     SMS history

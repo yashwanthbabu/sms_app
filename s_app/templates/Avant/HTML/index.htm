@@ -43,16 +43,36 @@
 <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
 <script type="text/javascript">
 $(function () {
-    if(document.location.search == '?filter=month') {
-        $.getJSON("{% url 'bar' %}?filter=month", function(data) {
-            $('#sincos').highcharts(data);
-        });
-    } 
+
+    var getLocation = function(href) {
+        var l = document.createElement("a");
+        l.href = href;
+        return l;
+    };
+
+    
+    var l = getLocation(window.location);
+    if (l.search!='undefined'){
+        path = "{% url 'bar' %}"+l.search
+    }
     else{
-        $.getJSON("{% url 'bar' %}", function(data) {
-            $('#sincos').highcharts(data);
-        });
-    }   
+        path = "{% url 'bar' %}"
+    }
+
+    $.getJSON(path, function(data) {
+        $('#sincos').highcharts(data);
+    });
+     
+    $("#period").change(function(){
+        window.location = "/chart?filter=" + $(this).val()
+    });
+    $( "#datepicker_1" ).datepicker();
+    $( "#datepicker_2" ).datepicker();
+
+    $("#filter_period").click(function(){
+        decode_date = $("form#filter").serialize();
+         window.location = "/chart/?" + decodeURIComponent(decode_date)
+  });
 });
 </script>
 
@@ -113,7 +133,7 @@ $(function () {
     <div id='wrap'>
         <div id="page-heading">
             <ol class="breadcrumb">
-                <li class='active'><a href="index.htm"> SMS Dashboard</a></li>
+                <li class='active'><a href="/dashboard/"> SMS Dashboard</a></li>
             </ol>
 
             <h1>SMS Dashboard</h1>
@@ -183,7 +203,7 @@ $(function () {
                                 <div class="tiles-heading">SMS's this day</div>
                                 <div class="tiles-body-alt">
                                     
-                                    <div class="text-center">{{ smses_in_day }}</div>
+                                    <div class="text-center">{{ smses_in_day.count }}</div>
                                     <small>SMS's from this day</small>
                                 </div>
                                 <div class="tiles-footer">SMS HISTORY</div>

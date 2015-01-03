@@ -57,6 +57,9 @@
     div.panel.panel-primary {
         width: 480px;
     }
+    #sms_form_table_id {
+        border-color: #4f8edc;
+    }
     </style>
 </head>
 
@@ -185,6 +188,7 @@
                         <span class="more"><a href="#">See all</a></span>
                     </div>
                 </div>
+                
 
                 <div class="widget">
                     <div class="widget-heading">
@@ -313,8 +317,11 @@
             </div>
         </div>
 
+<table border="1" style="height: 500px; width:95%; margin-left:20px;" id="sms_form_table_id"><br>
+                                        <tr>
+                                            <td>
+<center>      
 
-<center>        
     <div class="panel panel-primary">
                         <div class="panel-heading">
                               <h4><i class="fa fa-envelope"></i> SMS FORM </h4>
@@ -322,11 +329,14 @@
                         </div>
                         <div class="panel-body">
                             <h4 class="text-center" style="margin-bottom: 25px;">Enter particular to send sms</h4>
+                            
                             <form action="/sms/" method="post" id="smsform">{% csrf_token %}
                     <center>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
+
+
                                         {{ form.as_p }}<br>
                                 </div>
                             </div>
@@ -341,6 +351,9 @@
                         </div>
                     </div>
                     </form>
+                </td>
+            </tr>
+        </table>
                 </div>
 
 </center>
